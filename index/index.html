@@ -3,614 +3,849 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>环球新闻 - 最新、最全面的新闻资讯</title>
+    <title>自然风光 | 探索世界美景</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1a365d',
-                        secondary: '#2c5282',
-                        accent: '#ed8936',
-                        light: '#f7fafc',
-                        dark: '#2d3748'
+                        primary: '#165DFF',
+                        secondary: '#36BFFA',
+                        accent: '#FF7D00',
+                        dark: '#1D2939',
+                        light: '#F9FAFB'
                     },
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        serif: ['Georgia', 'serif']
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
                     },
                 }
             }
         }
     </script>
+    
     <style type="text/tailwindcss">
         @layer utilities {
             .content-auto {
                 content-visibility: auto;
             }
             .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             }
-            .card-hover {
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.5);
             }
-            .card-hover:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            .backdrop-blur {
+                backdrop-filter: blur(8px);
+            }
+            .scrollbar-hide {
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
             }
         }
     </style>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 font-sans text-dark">
+
+<body class="font-inter bg-light text-dark antialiased">
     <!-- 导航栏 -->
-    <header class="sticky top-0 z-50 bg-white shadow-md transition-all duration-300">
-        <div class="container mx-auto px-4">
-            <!-- 顶部导航 -->
-            <div class="flex justify-between items-center py-3 border-b border-gray-200">
-                <div class="flex items-center space-x-4">
-                    <button id="mobile-menu-button" class="lg:hidden text-gray-700 focus:outline-none">
-                        <i class="fa fa-bars text-xl"></i>
-                    </button>
-                    <a href="#" class="text-primary font-bold text-2xl">环球新闻</a>
-                </div>
-                
-                <div class="hidden lg:flex items-center space-x-1">
-                    <a href="#" class="px-3 py-2 text-sm font-medium text-white bg-primary rounded-md">首页</a>
-                    <a href="#" class="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">国内</a>
-                    <a href="#" class="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">国际</a>
-                    <a href="#" class="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">财经</a>
-                    <a href="#" class="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">科技</a>
-                    <a href="#" class="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">体育</a>
-                    <a href="#" class="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">娱乐</a>
-                </div>
-                
-                <div class="flex items-center space-x-4">
-                    <button class="text-gray-700 hover:text-primary transition-colors">
-                        <i class="fa fa-search text-lg"></i>
-                    </button>
-                    <button class="text-gray-700 hover:text-primary transition-colors hidden sm:block">
-                        <i class="fa fa-user-circle text-lg"></i>
-                    </button>
-                </div>
-            </div>
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-2">
+                <i class="fa fa-mountain text-white text-2xl"></i>
+                <span class="text-white font-bold text-xl tracking-wide text-shadow">自然风光</span>
+            </a>
             
-            <!-- 日期和天气信息 -->
-            <div class="flex flex-wrap justify-between items-center py-2 text-sm text-gray-600">
-                <div id="current-date">星期一, 2025年10月6日</div>
-                <div class="flex items-center space-x-4">
-                    <div class="flex items-center">
-                        <i class="fa fa-sun-o text-yellow-500 mr-1"></i>
-                        <span>北京 18°C 晴</span>
-                    </div>
-                    <div>
-                        <a href="#" class="hover:text-primary transition-colors">订阅新闻</a>
-                    </div>
-                </div>
-            </div>
+            <!-- 桌面导航 -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#gallery" class="text-white hover:text-accent transition-colors duration-300 font-medium">画廊</a>
+                <a href="#categories" class="text-white hover:text-accent transition-colors duration-300 font-medium">分类</a>
+                <a href="#featured" class="text-white hover:text-accent transition-colors duration-300 font-medium">精选</a>
+                <a href="#about" class="text-white hover:text-accent transition-colors duration-300 font-medium">关于</a>
+                <button class="bg-accent hover:bg-accent/90 text-white px-5 py-2 rounded-full transition-all duration-300 transform hover:scale-105">
+                    上传作品
+                </button>
+            </nav>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menu-toggle" class="md:hidden text-white text-2xl focus:outline-none">
+                <i class="fa fa-bars"></i>
+            </button>
         </div>
         
-        <!-- 移动端菜单 -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-200">
-            <div class="container mx-auto px-4 py-3 space-y-1">
-                <a href="#" class="block px-3 py-2 text-base font-medium text-white bg-primary rounded-md">首页</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">国内</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">国际</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">财经</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">科技</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">体育</a>
-                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">娱乐</a>
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white/90 backdrop-blur absolute w-full shadow-lg">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#gallery" class="text-dark hover:text-accent transition-colors duration-300 font-medium py-2 border-b border-gray-100">画廊</a>
+                <a href="#categories" class="text-dark hover:text-accent transition-colors duration-300 font-medium py-2 border-b border-gray-100">分类</a>
+                <a href="#featured" class="text-dark hover:text-accent transition-colors duration-300 font-medium py-2 border-b border-gray-100">精选</a>
+                <a href="#about" class="text-dark hover:text-accent transition-colors duration-300 font-medium py-2">关于</a>
+                <button class="bg-accent hover:bg-accent/90 text-white px-5 py-3 rounded-full transition-all duration-300">
+                    上传作品
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-6">
-        <!-- 头条新闻 -->
-        <section class="mb-12">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- 主头条 -->
-                <div class="lg:col-span-2 relative overflow-hidden rounded-xl group h-[500px]">
-                    <img src="https://picsum.photos/1200/800?random=1" alt="国家重大科技项目取得突破性进展" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 p-6 text-white">
-                        <span class="inline-block px-3 py-1 mb-3 text-xs font-semibold bg-accent rounded-full">头条</span>
-                        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold leading-tight text-shadow mb-3">
-                            国家重大科技项目取得突破性进展，引领行业新变革
-                        </h2>
-                        <p class="text-gray-200 mb-4 max-w-2xl">
-                            我国科研团队经过多年努力，在新能源领域取得重大突破，有望改变全球能源格局，相关技术已进入产业化阶段。
-                        </p>
-                        <div class="flex items-center text-sm text-gray-300">
-                            <span>科技日报</span>
-                            <span class="mx-2">•</span>
-                            <span>2小时前</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 右侧两条次要头条 -->
-                <div class="flex flex-col gap-6">
-                    <div class="relative overflow-hidden rounded-xl group h-[240px]">
-                        <img src="https://picsum.photos/800/600?random=2" alt="国际峰会达成多项合作协议" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 p-4 text-white">
-                            <span class="inline-block px-2 py-1 mb-2 text-xs font-semibold bg-secondary rounded-full">国际</span>
-                            <h3 class="text-lg font-bold text-shadow mb-1">国际峰会达成多项合作协议，促进全球经济复苏</h3>
-                            <div class="flex items-center text-xs text-gray-300">
-                                <span>5小时前</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="relative overflow-hidden rounded-xl group h-[240px]">
-                        <img src="https://picsum.photos/800/600?random=3" alt="全国教育大会在京召开" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 p-4 text-white">
-                            <span class="inline-block px-2 py-1 mb-2 text-xs font-semibold bg-secondary rounded-full">国内</span>
-                            <h3 class="text-lg font-bold text-shadow mb-1">全国教育大会在京召开，部署未来五年教育发展规划</h3>
-                            <div class="flex items-center text-xs text-gray-300">
-                                <span>8小时前</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 分类新闻 -->
-        <section class="mb-12">
-            <div class="flex items-center mb-6">
-                <h2 class="text-2xl font-bold text-primary">国内新闻</h2>
-                <div class="ml-auto">
-                    <a href="#" class="text-secondary hover:text-accent transition-colors flex items-center">
-                        查看更多 <i class="fa fa-angle-right ml-1"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- 新闻卡片 1 -->
-                <article class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://picsum.photos/600/400?random=10" alt="我国数字经济规模突破新纪录" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                        <span class="absolute top-3 left-3 px-2 py-1 text-xs font-semibold bg-green-500 text-white rounded">经济</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-primary transition-colors">
-                            <a href="#">我国数字经济规模突破新纪录，同比增长15.6%</a>
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            最新数据显示，我国数字经济规模已突破45万亿元，占GDP比重超过40%，数字产业化和产业数字化进程加速推进。
-                        </p>
-                        <div class="flex justify-between items-center text-gray-500 text-sm">
-                            <span>经济参考报</span>
-                            <span>12小时前</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- 新闻卡片 2 -->
-                <article class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://picsum.photos/600/400?random=11" alt="新修订的环境保护法正式实施" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                        <span class="absolute top-3 left-3 px-2 py-1 text-xs font-semibold bg-teal-500 text-white rounded">环保</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-primary transition-colors">
-                            <a href="#">新修订的环境保护法正式实施，加大生态保护力度</a>
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            新修订的环境保护法于今日正式实施，将进一步强化企业环保责任，完善生态补偿机制，加大对环境违法行为的处罚力度。
-                        </p>
-                        <div class="flex justify-between items-center text-gray-500 text-sm">
-                            <span>绿色时报</span>
-                            <span>1天前</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- 新闻卡片 3 -->
-                <article class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://picsum.photos/600/400?random=12" alt="全国交通网络建设取得新进展" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                        <span class="absolute top-3 left-3 px-2 py-1 text-xs font-semibold bg-blue-500 text-white rounded">交通</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-primary transition-colors">
-                            <a href="#">全国交通网络建设取得新进展，多条高铁线路将开通</a>
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            我国交通基础设施建设持续推进，年内将有10条新高铁线路开通运营，进一步完善全国高铁网络，提升出行效率。
-                        </p>
-                        <div class="flex justify-between items-center text-gray-500 text-sm">
-                            <span>交通周刊</span>
-                            <span>1天前</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-        
-        <!-- 国际新闻 -->
-        <section class="mb-12">
-            <div class="flex items-center mb-6">
-                <h2 class="text-2xl font-bold text-primary">国际新闻</h2>
-                <div class="ml-auto">
-                    <a href="#" class="text-secondary hover:text-accent transition-colors flex items-center">
-                        查看更多 <i class="fa fa-angle-right ml-1"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- 新闻卡片 1 -->
-                <article class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://picsum.photos/600/400?random=20" alt="全球气候变化峰会在巴黎举行" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                        <span class="absolute top-3 left-3 px-2 py-1 text-xs font-semibold bg-red-500 text-white rounded">全球</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-primary transition-colors">
-                            <a href="#">全球气候变化峰会在巴黎举行，多国承诺减排目标</a>
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            来自195个国家的代表齐聚巴黎，共同探讨应对气候变化的解决方案，多个国家宣布了新的减排目标和绿色能源投资计划。
-                        </p>
-                        <div class="flex justify-between items-center text-gray-500 text-sm">
-                            <span>环球时报</span>
-                            <span>2天前</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- 新闻卡片 2 -->
-                <article class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://picsum.photos/600/400?random=21" alt="亚洲多国加强区域经济合作" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                        <span class="absolute top-3 left-3 px-2 py-1 text-xs font-semibold bg-purple-500 text-white rounded">亚洲</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-primary transition-colors">
-                            <a href="#">亚洲多国加强区域经济合作，推动自由贸易协定升级</a>
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            亚洲多个国家近日宣布将进一步加强区域经济合作，推动现有自由贸易协定升级，降低贸易壁垒，促进区域经济一体化。
-                        </p>
-                        <div class="flex justify-between items-center text-gray-500 text-sm">
-                            <span>亚洲经济评论</span>
-                            <span>2天前</span>
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- 新闻卡片 3 -->
-                <article class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://picsum.photos/600/400?random=22" alt="新技术革命引领全球产业变革" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                        <span class="absolute top-3 left-3 px-2 py-1 text-xs font-semibold bg-indigo-500 text-white rounded">科技</span>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-3 line-clamp-2 hover:text-primary transition-colors">
-                            <a href="#">新技术革命引领全球产业变革，人工智能应用加速落地</a>
-                        </h3>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                            全球正经历新一轮技术革命，人工智能、大数据、区块链等技术加速与传统产业融合，推动生产方式和商业模式创新。
-                        </p>
-                        <div class="flex justify-between items-center text-gray-500 text-sm">
-                            <span>全球科技观察</span>
-                            <span>3天前</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-        
-        <!-- 热门与最新 -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            <!-- 热门新闻 -->
-            <section class="lg:col-span-2">
-                <div class="flex items-center mb-6">
-                    <h2 class="text-2xl font-bold text-primary">热门新闻</h2>
-                </div>
-                
-                <div class="space-y-6">
-                    <!-- 热门新闻 1 -->
-                    <article class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col md:flex-row card-hover">
-                        <div class="md:w-1/3 relative h-48 md:h-auto">
-                            <img src="https://picsum.photos/400/300?random=30" alt="全国消费市场持续回暖" class="w-full h-full object-cover">
-                        </div>
-                        <div class="md:w-2/3 p-5">
-                            <h3 class="text-lg font-bold mb-2 hover:text-primary transition-colors">
-                                <a href="#">全国消费市场持续回暖，三季度消费指数同比增长8.5%</a>
-                            </h3>
-                            <p class="text-gray-600 text-sm mb-3 line-clamp-2">
-                                随着经济复苏政策效果显现，我国消费市场持续回暖，三季度社会消费品零售总额同比增长8.5%，线上消费占比进一步提升。
-                            </p>
-                            <div class="flex justify-between items-center text-gray-500 text-sm">
-                                <span>商业日报</span>
-                                <span>3天前</span>
-                            </div>
-                        </div>
-                    </article>
-                    
-                    <!-- 热门新闻 2 -->
-                    <article class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col md:flex-row card-hover">
-                        <div class="md:w-1/3 relative h-48 md:h-auto">
-                            <img src="https://picsum.photos/400/300?random=31" alt="我国体育健儿在国际赛事中再创佳绩" class="w-full h-full object-cover">
-                        </div>
-                        <div class="md:w-2/3 p-5">
-                            <h3 class="text-lg font-bold mb-2 hover:text-primary transition-colors">
-                                <a href="#">我国体育健儿在国际赛事中再创佳绩，斩获多枚金牌</a>
-                            </h3>
-                            <p class="text-gray-600 text-sm mb-3 line-clamp-2">
-                                在刚刚结束的国际体育赛事中，我国运动员表现出色，共获得23枚金牌、15枚银牌和17枚铜牌，创下参赛以来最佳战绩。
-                            </p>
-                            <div class="flex justify-between items-center text-gray-500 text-sm">
-                                <span>体育周报</span>
-                                <span>4天前</span>
-                            </div>
-                        </div>
-                    </article>
-                    
-                    <!-- 热门新闻 3 -->
-                    <article class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col md:flex-row card-hover">
-                        <div class="md:w-1/3 relative h-48 md:h-auto">
-                            <img src="https://picsum.photos/400/300?random=32" alt="新研究为癌症治疗提供新思路" class="w-full h-full object-cover">
-                        </div>
-                        <div class="md:w-2/3 p-5">
-                            <h3 class="text-lg font-bold mb-2 hover:text-primary transition-colors">
-                                <a href="#">新研究为癌症治疗提供新思路，临床试验取得积极成果</a>
-                            </h3>
-                            <p class="text-gray-600 text-sm mb-3 line-clamp-2">
-                                我国科研团队在癌症免疫治疗领域取得重要突破，新研发的疗法在临床试验中展现出良好效果，为癌症患者带来新希望。
-                            </p>
-                            <div class="flex justify-between items-center text-gray-500 text-sm">
-                                <span>健康时报</span>
-                                <span>5天前</span>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
-            
-            <!-- 最新资讯 -->
-            <section>
-                <div class="flex items-center mb-6">
-                    <h2 class="text-2xl font-bold text-primary">最新资讯</h2>
-                </div>
-                
-                <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <div class="divide-y divide-gray-100">
-                        <!-- 最新资讯 1 -->
-                        <a href="#" class="block p-4 hover:bg-gray-50 transition-colors">
-                            <div class="flex items-start">
-                                <span class="flex-shrink-0 w-6 h-6 bg-accent rounded-full flex items-center justify-center text-white text-xs font-bold mr-3 mt-0.5">1</span>
-                                <div>
-                                    <h3 class="font-medium text-gray-900 hover:text-primary transition-colors">教育部发布最新教育改革方案，将加强素质教育</h3>
-                                    <p class="text-gray-500 text-xs mt-1">30分钟前</p>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <!-- 最新资讯 2 -->
-                        <a href="#" class="block p-4 hover:bg-gray-50 transition-colors">
-                            <div class="flex items-start">
-                                <span class="flex-shrink-0 w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 text-xs font-bold mr-3 mt-0.5">2</span>
-                                <div>
-                                    <h3 class="font-medium text-gray-900 hover:text-primary transition-colors">国家电网：今年将投资超千亿元建设新型电力系统</h3>
-                                    <p class="text-gray-500 text-xs mt-1">1小时前</p>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <!-- 最新资讯 3 -->
-                        <a href="#" class="block p-4 hover:bg-gray-50 transition-colors">
-                            <div class="flex items-start">
-                                <span class="flex-shrink-0 w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 text-xs font-bold mr-3 mt-0.5">3</span>
-                                <div>
-                                    <h3 class="font-medium text-gray-900 hover:text-primary transition-colors">国际油价小幅上涨，受全球供需关系影响</h3>
-                                    <p class="text-gray-500 text-xs mt-1">2小时前</p>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <!-- 最新资讯 4 -->
-                        <a href="#" class="block p-4 hover:bg-gray-50 transition-colors">
-                            <div class="flex items-start">
-                                <span class="flex-shrink-0 w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 text-xs font-bold mr-3 mt-0.5">4</span>
-                                <div>
-                                    <h3 class="font-medium text-gray-900 hover:text-primary transition-colors">我国首条跨海高铁隧道顺利贯通，预计明年通车</h3>
-                                    <p class="text-gray-500 text-xs mt-1">3小时前</p>
-                                </div>
-                            </div>
-                        </a>
-                        
-                        <!-- 最新资讯 5 -->
-                        <a href="#" class="block p-4 hover:bg-gray-50 transition-colors">
-                            <div class="flex items-start">
-                                <span class="flex-shrink-0 w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 text-xs font-bold mr-3 mt-0.5">5</span>
-                                <div>
-                                    <h3 class="font-medium text-gray-900 hover:text-primary transition-colors">2025年度文化艺术节将于下月在京开幕，近百场活动将举行</h3>
-                                    <p class="text-gray-500 text-xs mt-1">4小时前</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <div class="p-4 border-t border-gray-100 bg-gray-50">
-                        <a href="#" class="text-center block text-secondary hover:text-accent transition-colors text-sm font-medium">
-                            查看更多最新资讯
-                        </a>
-                    </div>
-                </div>
-            </section>
+    <!-- 英雄区域 -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://picsum.photos/id/10/1920/1080" alt="壮观的山脉风景" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70"></div>
         </div>
         
-        <!-- 图片新闻 -->
-        <section class="mb-12">
-            <div class="flex items-center mb-6">
-                <h2 class="text-2xl font-bold text-primary">图片新闻</h2>
-                <div class="ml-auto">
-                    <a href="#" class="text-secondary hover:text-accent transition-colors flex items-center">
-                        查看更多 <i class="fa fa-angle-right ml-1"></i>
+        <div class="container mx-auto px-4 z-10 text-center">
+            <h1 class="text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-white leading-tight text-shadow-lg mb-6 animate-fade-in">
+                探索世界的<br class="md:hidden">自然奇观
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 max-w-2xl mx-auto mb-10 text-shadow">
+                发现地球上最令人惊叹的风景，从雄伟的山脉到宁静的海滩，每一处都讲述着大自然的故事
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 font-medium">
+                    浏览画廊
+                </button>
+                <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white border border-white/40 px-8 py-3 rounded-full transition-all duration-300 font-medium">
+                    了解更多
+                </button>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce">
+            <a href="#gallery" class="text-white/80 hover:text-white transition-colors">
+                <i class="fa fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 画廊区域 -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">精选风景</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">探索我们精心挑选的自然风景摄影作品，每一张照片都捕捉了大自然的独特魅力与瞬间之美</p>
+            </div>
+            
+            <!-- 筛选工具栏 -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="filter-btn active px-5 py-2 rounded-full bg-primary text-white transition-all">全部</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all">山脉</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all">海洋</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all">森林</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all">湖泊</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all">沙漠</button>
+                <button class="filter-btn px-5 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-all">极光</button>
+            </div>
+            
+            <!-- 图片网格 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- 图片项1 -->
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-category="山脉">
+                    <img src="https://picsum.photos/id/29/800/600" alt="雪山风景" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white font-semibold text-xl">阿尔卑斯山脉</h3>
+                        <p class="text-white/80 text-sm">瑞士 · 马特洪峰</p>
+                        <div class="flex items-center mt-4 space-x-3">
+                            <button class="view-btn bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 图片项2 -->
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-category="海洋">
+                    <img src="https://picsum.photos/id/65/800/600" alt="海滩风景" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white font-semibold text-xl">热带海滩</h3>
+                        <p class="text-white/80 text-sm">马尔代夫 · 白沙滩</p>
+                        <div class="flex items-center mt-4 space-x-3">
+                            <button class="view-btn bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 图片项3 -->
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-category="森林">
+                    <img src="https://picsum.photos/id/137/800/600" alt="森林风景" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white font-semibold text-xl">迷雾森林</h3>
+                        <p class="text-white/80 text-sm">加拿大 · 温哥华岛</p>
+                        <div class="flex items-center mt-4 space-x-3">
+                            <button class="view-btn bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 图片项4 -->
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-category="湖泊">
+                    <img src="https://picsum.photos/id/135/800/600" alt="湖泊风景" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white font-semibold text-xl">高山湖泊</h3>
+                        <p class="text-white/80 text-sm">意大利 · 科莫湖</p>
+                        <div class="flex items-center mt-4 space-x-3">
+                            <button class="view-btn bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 图片项5 -->
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-category="沙漠">
+                    <img src="https://picsum.photos/id/1036/800/600" alt="沙漠风景" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white font-semibold text-xl">金色沙漠</h3>
+                        <p class="text-white/80 text-sm">摩洛哥 · 撒哈拉</p>
+                        <div class="flex items-center mt-4 space-x-3">
+                            <button class="view-btn bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 图片项6 -->
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-category="极光">
+                    <img src="https://picsum.photos/id/1039/800/600" alt="极光风景" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white font-semibold text-xl">北极光</h3>
+                        <p class="text-white/80 text-sm">挪威 · 特罗姆瑟</p>
+                        <div class="flex items-center mt-4 space-x-3">
+                            <button class="view-btn bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 图片项7 -->
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-category="山脉">
+                    <img src="https://picsum.photos/id/28/800/600" alt="山脉风景" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white font-semibold text-xl">落基山脉</h3>
+                        <p class="text-white/80 text-sm">加拿大 · 班夫国家公园</p>
+                        <div class="flex items-center mt-4 space-x-3">
+                            <button class="view-btn bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 图片项8 -->
+                <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-category="海洋">
+                    <img src="https://picsum.photos/id/1043/800/600" alt="海洋风景" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 class="text-white font-semibold text-xl">悬崖海岸</h3>
+                        <p class="text-white/80 text-sm">冰岛 · 黑沙滩</p>
+                        <div class="flex items-center mt-4 space-x-3">
+                            <button class="view-btn bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="bg-white/20 backdrop-blur hover:bg-white/30 text-white p-2 rounded-full transition-all">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 加载更多按钮 -->
+            <div class="text-center mt-12">
+                <button id="load-more" class="bg-gray-100 hover:bg-gray-200 text-dark px-8 py-3 rounded-full transition-all duration-300 font-medium flex items-center mx-auto">
+                    <span>加载更多</span>
+                    <i class="fa fa-refresh ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 分类区域 -->
+    <section id="categories" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">风景分类</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">浏览不同类型的自然风光，从壮丽的山脉到神秘的森林，每一类都有其独特的魅力</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 分类1 -->
+                <div class="category-card group relative rounded-xl overflow-hidden h-80 transform transition-all duration-500 hover:-translate-y-2">
+                    <img src="https://picsum.photos/id/29/800/800" alt="山脉风景分类" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+                    <div class="absolute inset-0 flex flex-col justify-end p-8">
+                        <h3 class="text-white font-bold text-2xl mb-2 group-hover:text-accent transition-colors">山脉</h3>
+                        <p class="text-white/80 mb-4">探索世界上最雄伟的山峰和山脉景观</p>
+                        <a href="#" class="inline-flex items-center text-white hover:text-accent transition-colors font-medium">
+                            查看系列 <i class="fa fa-arrow-right ml-2 group-hover:ml-3 transition-all"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 分类2 -->
+                <div class="category-card group relative rounded-xl overflow-hidden h-80 transform transition-all duration-500 hover:-translate-y-2">
+                    <img src="https://picsum.photos/id/1043/800/800" alt="海洋风景分类" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+                    <div class="absolute inset-0 flex flex-col justify-end p-8">
+                        <h3 class="text-white font-bold text-2xl mb-2 group-hover:text-accent transition-colors">海洋</h3>
+                        <p class="text-white/80 mb-4">领略海洋的广阔与神秘，从平静的海湾到汹涌的海浪</p>
+                        <a href="#" class="inline-flex items-center text-white hover:text-accent transition-colors font-medium">
+                            查看系列 <i class="fa fa-arrow-right ml-2 group-hover:ml-3 transition-all"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 分类3 -->
+                <div class="category-card group relative rounded-xl overflow-hidden h-80 transform transition-all duration-500 hover:-translate-y-2">
+                    <img src="https://picsum.photos/id/137/800/800" alt="森林风景分类" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
+                    <div class="absolute inset-0 flex flex-col justify-end p-8">
+                        <h3 class="text-white font-bold text-2xl mb-2 group-hover:text-accent transition-colors">森林</h3>
+                        <p class="text-white/80 mb-4">走进茂密的森林，感受大自然的生命力与宁静</p>
+                        <a href="#" class="inline-flex items-center text-white hover:text-accent transition-colors font-medium">
+                            查看系列 <i class="fa fa-arrow-right ml-2 group-hover:ml-3 transition-all"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 精选作品 -->
+    <section id="featured" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-4">本月精选</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">这些令人惊叹的风景照片由我们的社区成员拍摄，展现了大自然最美丽的一面</p>
+            </div>
+            
+            <div class="relative">
+                <!-- 精选大图 -->
+                <div class="rounded-2xl overflow-hidden shadow-xl mb-8">
+                    <img src="https://picsum.photos/id/1018/1600/900" alt="壮观的山脉全景" class="w-full h-[500px] object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8">
+                        <div class="flex flex-col md:flex-row md:items-end justify-between">
+                            <div>
+                                <span class="bg-accent text-white text-sm px-3 py-1 rounded-full">编辑推荐</span>
+                                <h3 class="text-white text-2xl md:text-3xl font-bold mt-3">喜马拉雅山脉全景</h3>
+                                <p class="text-white/80 mt-2">尼泊尔 · 珠穆朗玛峰大本营</p>
+                            </div>
+                            <div class="mt-4 md:mt-0 flex items-center">
+                                <img src="https://picsum.photos/id/64/100/100" alt="摄影师头像" class="w-12 h-12 rounded-full object-cover border-2 border-white">
+                                <div class="ml-3">
+                                    <p class="text-white font-medium">李明</p>
+                                    <p class="text-white/70 text-sm">专业风景摄影师</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 精选小图滚动 -->
+                <div class="relative">
+                    <div class="overflow-x-auto scrollbar-hide pb-4">
+                        <div class="flex space-x-4 w-max">
+                            <!-- 精选小图1 -->
+                            <div class="featured-small relative w-64 h-48 rounded-xl overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-all">
+                                <img src="https://picsum.photos/id/10/600/400" alt="精选风景" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-4">
+                                    <h4 class="text-white font-semibold">山谷溪流</h4>
+                                    <p class="text-white/80 text-sm">瑞士</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 精选小图2 -->
+                            <div class="featured-small relative w-64 h-48 rounded-xl overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-all">
+                                <img src="https://picsum.photos/id/15/600/400" alt="精选风景" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-4">
+                                    <h4 class="text-white font-semibold">海岸日落</h4>
+                                    <p class="text-white/80 text-sm">葡萄牙</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 精选小图3 -->
+                            <div class="featured-small relative w-64 h-48 rounded-xl overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-all">
+                                <img src="https://picsum.photos/id/18/600/400" alt="精选风景" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-4">
+                                    <h4 class="text-white font-semibold">沙漠星空</h4>
+                                    <p class="text-white/80 text-sm">约旦</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 精选小图4 -->
+                            <div class="featured-small relative w-64 h-48 rounded-xl overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-all">
+                                <img src="https://picsum.photos/id/26/600/400" alt="精选风景" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-4">
+                                    <h4 class="text-white font-semibold">雪山湖泊</h4>
+                                    <p class="text-white/80 text-sm">新西兰</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 精选小图5 -->
+                            <div class="featured-small relative w-64 h-48 rounded-xl overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-all">
+                                <img src="https://picsum.photos/id/42/600/400" alt="精选风景" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-4">
+                                    <h4 class="text-white font-semibold">热带雨林</h4>
+                                    <p class="text-white/80 text-sm">巴西</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 滚动箭头 -->
+                    <button class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white rounded-full w-10 h-10 shadow-lg flex items-center justify-center text-dark hover:text-primary transition-colors md:block hidden">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 bg-white rounded-full w-10 h-10 shadow-lg flex items-center justify-center text-dark hover:text-primary transition-colors md:block hidden">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 订阅区域 -->
+    <section class="py-16 bg-primary/5">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-8 md:p-12 flex flex-col justify-center">
+                        <h2 class="text-2xl md:text-3xl font-bold text-dark mb-4">获取最新风景摄影</h2>
+                        <p class="text-gray-600 mb-6">订阅我们的 newsletter，每周收到精选风景照片和摄影技巧</p>
+                        <form class="space-y-4">
+                            <div>
+                                <input type="email" placeholder="输入您的邮箱地址" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                            </div>
+                            <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02]">
+                                立即订阅
+                            </button>
+                            <p class="text-gray-500 text-sm">我们尊重您的隐私，不会向第三方分享您的信息</p>
+                        </form>
+                    </div>
+                    <div class="hidden md:block relative">
+                        <img src="https://picsum.photos/id/1015/800/1000" alt="风景照片展示" class="absolute inset-0 w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于区域 -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark mb-6">关于我们的风景图库</h2>
+                    <p class="text-gray-600 mb-4">自然风光图库致力于收集和展示世界各地最美丽的自然景观照片。我们相信大自然的美丽能够启发和治愈人们的心灵。</p>
+                    <p class="text-gray-600 mb-6">所有照片均来自全球优秀的风景摄影师，他们用镜头捕捉了大自然最动人的瞬间。我们希望通过这些照片，让更多人感受到地球的美丽，从而更加珍惜和保护我们的自然环境。</p>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">10k+</div>
+                            <div class="text-gray-600 text-sm">精选照片</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">500+</div>
+                            <div class="text-gray-600 text-sm">摄影师</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">120+</div>
+                            <div class="text-gray-600 text-sm">国家地区</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary mb-2">50k+</div>
+                            <div class="text-gray-600 text-sm">社区成员</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors">
+                        了解更多关于我们 <i class="fa fa-long-arrow-right ml-2"></i>
                     </a>
                 </div>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <a href="#" class="block group relative overflow-hidden rounded-xl h-64">
-                    <img src="https://picsum.photos/600/800?random=40" alt="乡村振兴新面貌" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="absolute bottom-0 left-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                        <h3 class="font-bold text-shadow">乡村振兴新面貌：特色产业带动村民增收</h3>
-                    </div>
-                </a>
                 
-                <a href="#" class="block group relative overflow-hidden rounded-xl h-64">
-                    <img src="https://picsum.photos/600/800?random=41" alt="城市夜景" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="absolute bottom-0 left-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                        <h3 class="font-bold text-shadow">城市夜景：科技创新点亮智慧城市</h3>
+                <div class="relative">
+                    <div class="rounded-xl overflow-hidden shadow-xl">
+                        <img src="https://picsum.photos/id/1031/800/600" alt="风景摄影" class="w-full h-auto">
                     </div>
-                </a>
-                
-                <a href="#" class="block group relative overflow-hidden rounded-xl h-64">
-                    <img src="https://picsum.photos/600/800?random=42" alt="生态保护区" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="absolute bottom-0 left-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                        <h3 class="font-bold text-shadow">生态保护区：珍稀野生动物数量稳步增长</h3>
+                    <div class="absolute -bottom-6 -left-6 w-48 h-48 rounded-xl overflow-hidden shadow-lg hidden md:block">
+                        <img src="https://picsum.photos/id/1019/400/400" alt="风景摄影细节" class="w-full h-full object-cover">
                     </div>
-                </a>
-                
-                <a href="#" class="block group relative overflow-hidden rounded-xl h-64">
-                    <img src="https://picsum.photos/600/800?random=43" alt="国际文化交流活动" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="absolute bottom-0 left-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                        <h3 class="font-bold text-shadow">国际文化交流活动：促进文明互鉴与理解</h3>
-                    </div>
-                </a>
-            </div>
-        </section>
-        
-        <!-- 订阅区域 -->
-        <section class="mb-12 bg-primary rounded-2xl overflow-hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2">
-                <div class="p-8 md:p-12 flex flex-col justify-center">
-                    <h2 class="text-3xl font-bold text-white mb-4">订阅新闻简报</h2>
-                    <p class="text-gray-200 mb-6">第一时间获取重要新闻推送，每日精选内容直达您的邮箱</p>
-                    <form class="space-y-4">
-                        <div>
-                            <input type="email" placeholder="请输入您的邮箱地址" class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
-                        </div>
+                    <div class="absolute -top-6 -right-6 bg-white p-4 rounded-xl shadow-lg hidden md:block">
                         <div class="flex items-center">
-                            <input type="checkbox" id="agree" class="mr-2">
-                            <label for="agree" class="text-sm text-gray-200">我同意接收每日新闻简报</label>
+                            <i class="fa fa-camera text-3xl text-primary mr-3"></i>
+                            <div>
+                                <div class="text-gray-500 text-sm">每周更新</div>
+                                <div class="font-semibold">新的风景照片</div>
+                            </div>
                         </div>
-                        <button type="submit" class="w-full bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-                            立即订阅
-                        </button>
-                    </form>
-                </div>
-                <div class="hidden md:block relative">
-                    <img src="https://picsum.photos/800/600?random=50" alt="新闻订阅" class="absolute inset-0 w-full h-full object-cover">
+                    </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <!-- 页脚 -->
-    <footer class="bg-dark text-gray-400">
-        <div class="container mx-auto px-4 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <div>
-                    <h3 class="text-xl font-bold text-white mb-4">环球新闻</h3>
-                    <p class="mb-4">提供及时、准确、全面的新闻资讯，覆盖国内外政治、经济、科技、文化等多个领域。</p>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <i class="fa fa-mountain text-accent text-2xl"></i>
+                        <span class="font-bold text-xl tracking-wide">自然风光</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">探索世界上最美丽的自然景观，感受大自然的魅力与力量。</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-weibo text-xl"></i>
+                        <a href="#" class="bg-white/10 hover:bg-accent w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa fa-facebook"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-wechat text-xl"></i>
+                        <a href="#" class="bg-white/10 hover:bg-accent w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa fa-instagram"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-twitter text-xl"></i>
+                        <a href="#" class="bg-white/10 hover:bg-accent w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-facebook text-xl"></i>
+                        <a href="#" class="bg-white/10 hover:bg-accent w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa fa-pinterest"></i>
                         </a>
                     </div>
                 </div>
                 
                 <div>
-                    <h4 class="text-lg font-semibold text-white mb-4">新闻分类</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white transition-colors">国内新闻</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">国际新闻</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">财经资讯</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">科技动态</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">体育赛事</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">娱乐八卦</a></li>
+                    <h3 class="font-bold text-lg mb-6">快速链接</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#gallery" class="text-gray-400 hover:text-accent transition-colors">照片画廊</a></li>
+                        <li><a href="#categories" class="text-gray-400 hover:text-accent transition-colors">风景分类</a></li>
+                        <li><a href="#featured" class="text-gray-400 hover:text-accent transition-colors">精选作品</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">摄影师专栏</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">摄影技巧</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-accent transition-colors">关于我们</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="text-lg font-semibold text-white mb-4">关于我们</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white transition-colors">公司简介</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">编辑团队</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">联系方式</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">加入我们</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">广告服务</a></li>
+                    <h3 class="font-bold text-lg mb-6">联系我们</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker text-accent mt-1 mr-3"></i>
+                            <span class="text-gray-400">北京市朝阳区艺术大道100号</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope text-accent mr-3"></i>
+                            <span class="text-gray-400">contact@natureview.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone text-accent mr-3"></i>
+                            <span class="text-gray-400">+86 10 8888 7777</span>
+                        </li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="text-lg font-semibold text-white mb-4">用户服务</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white transition-colors">用户协议</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">版权声明</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">常见问题</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">意见反馈</a></li>
-                    </ul>
+                    <h3 class="font-bold text-lg mb-6">下载我们的应用</h3>
+                    <p class="text-gray-400 mb-4">随时随地欣赏和下载高质量的风景照片</p>
+                    <div class="space-y-3">
+                        <a href="#" class="bg-white/10 hover:bg-white/20 p-3 rounded-lg flex items-center transition-colors">
+                            <i class="fa fa-apple text-2xl mr-3"></i>
+                            <div>
+                                <div class="text-xs">下载</div>
+                                <div class="font-medium">App Store</div>
+                            </div>
+                        </a>
+                        <a href="#" class="bg-white/10 hover:bg-white/20 p-3 rounded-lg flex items-center transition-colors">
+                            <i class="fa fa-android text-2xl mr-3"></i>
+                            <div>
+                                <div class="text-xs">下载</div>
+                                <div class="font-medium">Google Play</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
             
-            <div class="pt-8 border-t border-gray-700 text-center text-sm">
-                <p>© 2025 环球新闻网 版权所有 | 京ICP备12345678号</p>
-                <p class="mt-2">本网站内容仅供参考，不作为任何决策依据</p>
+            <div class="border-t border-white/10 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2023 自然风光图库. 保留所有权利.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">隐私政策</a>
+                        <a href="#" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">使用条款</a>
+                        <a href="#" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">版权信息</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- 图片查看器模态框 -->
+    <div id="image-viewer" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 opacity-0 pointer-events-none transition-opacity duration-300">
+        <button id="close-viewer" class="absolute top-6 right-6 text-white text-3xl hover:text-accent transition-colors">
+            <i class="fa fa-times"></i>
+        </button>
+        <button id="prev-image" class="absolute left-6 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-accent transition-colors">
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        <button id="next-image" class="absolute right-6 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-accent transition-colors">
+            <i class="fa fa-chevron-right"></i>
+        </button>
+        
+        <div class="max-w-5xl w-full px-4 py-8">
+            <img id="viewer-image" src="" alt="大图查看" class="w-full h-auto max-h-[80vh] object-contain">
+            <div class="mt-6 text-white">
+                <h3 id="viewer-title" class="text-2xl font-bold"></h3>
+                <p id="viewer-location" class="text-white/80"></p>
+                <div class="flex items-center mt-4 space-x-4">
+                    <button class="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all">
+                        <i class="fa fa-download"></i>
+                    </button>
+                    <button class="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all">
+                        <i class="fa fa-heart-o"></i>
+                    </button>
+                    <button class="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all">
+                        <i class="fa fa-share-alt"></i>
+                    </button>
+                    <button class="bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-all">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // 移动端菜单切换
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-dark/90', 'backdrop-blur', 'shadow-md');
+                navbar.classList.remove('bg-transparent');
+            } else {
+                navbar.classList.remove('bg-dark/90', 'backdrop-blur', 'shadow-md');
+                navbar.classList.add('bg-transparent');
+            }
         });
         
-        // 导航栏滚动效果
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.classList.add('py-2', 'shadow-lg');
-                header.classList.remove('py-4');
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = menuToggle.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             } else {
-                header.classList.remove('py-2', 'shadow-lg');
-                header.classList.add('py-4');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
             }
+        });
+        
+        // 筛选功能
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 更新按钮状态
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-primary', 'text-white');
+                    btn.classList.add('bg-gray-100');
+                });
+                button.classList.add('active', 'bg-primary', 'text-white');
+                button.classList.remove('bg-gray-100');
+                
+                const category = button.textContent;
+                
+                // 筛选图片
+                galleryItems.forEach(item => {
+                    if (category === '全部' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                        // 添加动画效果
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+        
+        // 图片查看器
+        const imageViewer = document.getElementById('image-viewer');
+        const viewerImage = document.getElementById('viewer-image');
+        const viewerTitle = document.getElementById('viewer-title');
+        const viewerLocation = document.getElementById('viewer-location');
+        const closeViewer = document.getElementById('close-viewer');
+        const viewButtons = document.querySelectorAll('.view-btn');
+        
+        // 打开图片查看器
+        viewButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const galleryItem = button.closest('.gallery-item');
+                const img = galleryItem.querySelector('img');
+                const title = galleryItem.querySelector('h3').textContent;
+                const location = galleryItem.querySelector('p').textContent;
+                
+                viewerImage.src = img.src.replace('/800/600', '/1600/1200');
+                viewerImage.alt = img.alt;
+                viewerTitle.textContent = title;
+                viewerLocation.textContent = location;
+                
+                imageViewer.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // 关闭图片查看器
+        closeViewer.addEventListener('click', () => {
+            imageViewer.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // 点击背景关闭查看器
+        imageViewer.addEventListener('click', (e) => {
+            if (e.target === imageViewer) {
+                imageViewer.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 加载更多功能
+        const loadMoreBtn = document.getElementById('load-more');
+        let isLoading = false;
+        
+        loadMoreBtn.addEventListener('click', () => {
+            if (isLoading) return;
+            
+            isLoading = true;
+            loadMoreBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 加载中...';
+            
+            // 模拟加载延迟
+            setTimeout(() => {
+                const galleryGrid = document.querySelector('#gallery .grid');
+                
+                // 复制现有图片并修改
+                const existingItems = document.querySelectorAll('.gallery-item');
+                const randomItems = Array.from(existingItems).sort(() => 0.5 - Math.random()).slice(0, 4);
+                
+                randomItems.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    galleryGrid.appendChild(clone);
+                    
+                    // 为新添加的图片绑定查看事件
+                    const newViewBtn = clone.querySelector('.view-btn');
+                    newViewBtn.addEventListener('click', () => {
+                        const img = clone.querySelector('img');
+                        const title = clone.querySelector('h3').textContent;
+                        const location = clone.querySelector('p').textContent;
+                        
+                        viewerImage.src = img.src.replace('/800/600', '/1600/1200');
+                        viewerImage.alt = img.alt;
+                        viewerTitle.textContent = title;
+                        viewerLocation.textContent = location;
+                        
+                        imageViewer.classList.remove('opacity-0', 'pointer-events-none');
+                        document.body.style.overflow = 'hidden';
+                    });
+                });
+                
+                isLoading = false;
+                loadMoreBtn.innerHTML = '<span>加载更多</span><i class="fa fa-refresh ml-2"></i>';
+            }, 1500);
         });
         
         // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                // 关闭移动菜单（如果打开）
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
     </script>
